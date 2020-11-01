@@ -21,9 +21,10 @@ exports.createWorkout = async (workoutProgramName, userId) => {
 };
 
 exports.getAllWorkoutPrograms = async (req, res) => {
-    WorkoutProgramModel.find({}, function(err, result) {
+    WorkoutProgramModel.find({}, (err, result) => {
         if (err) {
             console.log(err);
+            // TODO: Send error res back
         } else {
             res.json(result);
         }

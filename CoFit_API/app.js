@@ -10,18 +10,18 @@ var usersRouter = require('./routes/users');
 
 
 let dbURI = "mongodb://localhost/CoFitDb";
+//let dbURI = "mongodb+srv://thomasflorent:thomasflorent@cluster0.5c4uh.mongodb.net/test";
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGODB_URI;
 }
 
-/*
-// HEROKU
+
 mongoose.connect(dbURI, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
   useFindAndModify: false 
 });
-*/
+
 
 // TODO: Remove, test purposes
 mongoose.connection.on("connected", () => {
