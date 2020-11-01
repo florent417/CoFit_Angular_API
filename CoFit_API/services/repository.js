@@ -49,11 +49,15 @@ exports.updateWorkoutProgramExercises = async (req) => {
 exports.createUser = async (user) => {
     console.log('In Repository')
     console.log(user)
-    return await UserModel.create(user, function (error, user){
+    
+    await UserModel.create(user, function (error, user){
         if(error){
-            console.log(error)
+            return Promise.reject(new Error('Opps'));
+        }else{
+            return Promise.resolve();
         }
     })
+    
 };
 
 exports.validateUserByUsernamePassword = async (user) => {
