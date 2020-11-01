@@ -20,6 +20,16 @@ exports.createWorkout = async (workoutProgramName, userId) => {
 
 };
 
+exports.getAllWorkoutPrograms = async (req, res) => {
+    WorkoutProgramModel.find({}, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }
+    });
+}
+
 // TODO: User parameter
 exports.getAllWorkoutProgramsForUser =  async (userid) => {
     return await WorkoutProgramModel.find({"createdBy": userid});
