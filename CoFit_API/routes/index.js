@@ -14,6 +14,7 @@ router.post('/register', ctrlauth.register)
 /* Programs */
 router.get('/programs', ctrlPrograms.index);
 router.post('/programs', ctrlPrograms.createProgram);
+router.get('/program', ctrlPrograms.workoutProgram);
 
 
 module.exports = router;

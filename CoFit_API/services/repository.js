@@ -24,33 +24,21 @@ exports.createProgram = async (workoutProgramName, userId) => {
 exports.getAllWorkoutPrograms = () => {
     return new Promise((resolve, reject) => 
         WorkoutProgramModel.find({}, 
-            (err, res) => {
-                err ? reject(err) : resolve(res)
-                /*
-                if (err) {
-                    console.log(err);
-                    // TODO: Send error res back
-                } else {
-                    reso
-                    //res.json(result);
-                }
-                */
-            }
+            (err, res) => err ? reject(err) : resolve(res)
         )
     );
 }
 
-// TODO: User parameter
+// TODO: Delete this
 exports.getAllWorkoutProgramsForUser =  async (userid) => {
     return new Promise((resolve, reject) => 
         WorkoutProgramModel.find({"createdBy": userid}, 
-            (err, res) => 
-                err ? reject(err) : resolve(res)
+            (err, res) => err ? reject(err) : resolve(res)
         )
     );
 };
 
-exports.getWorkoutProgramForUser =  async (workoutProgramId) => {
+exports.getWorkoutProgram =  async (workoutProgramId) => {
     let workoutProgramObjectId = mongoose.Types.ObjectId(workoutProgramId);
     
     return new Promise((resolve, reject) => {
