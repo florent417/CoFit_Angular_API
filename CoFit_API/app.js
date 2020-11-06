@@ -5,6 +5,7 @@ var logger = require('morgan');
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 
+// TODO: Change var names
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
