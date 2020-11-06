@@ -56,19 +56,16 @@ exports.updateWorkoutProgramExercises = async (req) => {
     });
 };
 
-exports.createUser = async (user) => {
-    console.log('In Repository')
-    console.log(user)
+// This is best practice i suppose?
+exports.createUser = function(user){
+    return new Promise(function(resolve, reject) {
+        UserModel.create(user, (err, res) => err ? reject(err) : resolve(res))
+    });
+}
     
-    await UserModel.create(user, function (error, user){
-        if(error){
-            return Promise.reject(new Error('Opps'));
-        }else{
-            return Promise.resolve();
-        }
-    })
-    
-};
+
+
+//UserModel.create(user, (err, res) => err ? reject(err) : resolve(res))
 
 exports.validateUserByUsernamePassword = async (user) => {
     console.log(user)
