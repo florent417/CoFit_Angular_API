@@ -19,7 +19,8 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.workoutProgram = async (req, res) => {
-  await repo.getWorkoutProgram(req.body)
+  console.log(req.body);
+  await repo.getWorkoutProgram(req)
     .then(workoutProgram => {
       res
         .status(200)
@@ -33,7 +34,7 @@ module.exports.workoutProgram = async (req, res) => {
 }
 //5f6dbc959242e01a4cfe9d2a
 // TODO: change this
-module.exports.createProgram = async (programName, userId) => {
-  await repo.createProgram(programName, userId);
+module.exports.createProgram = async (req, res) => {
+  await repo.createProgram(req, res);
     //repo.createWorkout(programName, userId);
 }

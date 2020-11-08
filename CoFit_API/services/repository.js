@@ -4,12 +4,12 @@ const WorkoutProgramModel = require("../models/workoutProgram");
 const ExerciseModel = require("../models/exercise");
 
 // TODO: How to do this as a promis, since its double trip to db
-exports.createProgram = async (workoutProgramName, userId) => {
+exports.createProgram = async (req, res) => {
     const workoutProgram = new WorkoutProgramModel();
-    workoutProgram.name = workoutProgramName;
-    workoutProgram.createdBy = userId;
+    workoutProgram.name = req.body.name;
+    workoutProgram.createdBy = req.body.createdBy;
 
-    const currentUser = UserModel.findByIdAndUpdate(userId, { 
+    const currentUser = UserModel.findByIdAndUpdate(req.body.createdBy, { 
         $push: { 
             workoutPrograms: workoutProgram._id 
         }
@@ -38,8 +38,8 @@ exports.getAllWorkoutProgramsForUser =  async (userid) => {
     );
 };
 
-exports.getWorkoutProgram =  async (workoutProgramId) => {
-    let workoutProgramObjectId = mongoose.Types.ObjectId(workoutProgramId);
+exports.getWorkoutProgram =  async (req) => {
+    let workoutProgramObjectId = mongoose.Types.ObjectId(req.body.workoutProgramId);
     
     return new Promise((resolve, reject) => {
         WorkoutProgramModel.findById(workoutProgramObjectId, (err, res) => 
