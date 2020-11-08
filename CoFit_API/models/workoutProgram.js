@@ -17,8 +17,8 @@ const workoutProgram = new Schema(
             type: Schema.Types.ObjectId, 
             ref: "User"
         },
-        logActivity:  {
-            type: String,
+        logs:  {
+            type: [String],
             required: false
         },
     }

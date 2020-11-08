@@ -3,22 +3,26 @@ const UserModel = require("../models/user");
 const WorkoutProgramModel = require("../models/workoutProgram");
 const ExerciseModel = require("../models/exercise");
 
-// TODO: How to do this as a promis, since its double trip to db
 exports.createProgram = async (req, res) => {
     const workoutProgram = new WorkoutProgramModel();
     workoutProgram.name = req.body.name;
     workoutProgram.createdBy = req.body.createdBy;
 
-    const currentUser = UserModel.findByIdAndUpdate(req.body.createdBy, { 
-        $push: { 
-            workoutPrograms: workoutProgram._id 
-        }
-    }).then( async resolve => {
-        return await WorkoutProgramModel.create(workoutProgram);
-    }, err => {
-        console.log(err);
+    return new Promise((resolve, reject) => {
+        UserModel.findByIdAndUpdate(req.body.createdBy, { 
+            $push: { 
+                workoutPrograms: workoutProgram._id 
+            }
+        }, (err, res) => {
+                if(err) reject(err);
+                else {
+                    WorkoutProgramModel.create(workoutProgram, (err, res) => {
+                        err ? reject(err) : resolve(res);
+                    })
+                }
+            }
+        );
     });
-
 };
 
 exports.getAllWorkoutPrograms = () => {
@@ -29,15 +33,6 @@ exports.getAllWorkoutPrograms = () => {
     );
 }
 
-// TODO: Delete this
-exports.getAllWorkoutProgramsForUser =  async (userid) => {
-    return new Promise((resolve, reject) => 
-        WorkoutProgramModel.find({"createdBy": userid}, 
-            (err, res) => err ? reject(err) : resolve(res)
-        )
-    );
-};
-
 exports.getWorkoutProgram =  async (req) => {
     let workoutProgramObjectId = mongoose.Types.ObjectId(req.body.workoutProgramId);
     
@@ -47,7 +42,7 @@ exports.getWorkoutProgram =  async (req) => {
     }) 
 };
 
-exports.updateWorkoutProgramExercises = async (req) => {
+exports.addExerciseToProgram = async (req) => {
     const exercise = new ExerciseModel({
         name: req.body.name,
         description: req.body.description,
@@ -64,6 +59,16 @@ exports.updateWorkoutProgramExercises = async (req) => {
     }) 
 };
 
+exports.addLogActivityToProgram = async (req) => {
+    return new Promise((resolve, reject) => {
+        WorkoutProgramModel.findByIdAndUpdate(req.body.programId, { 
+            $push: { 
+                logs: req.body.logActivity 
+            }
+        }, (err, res) => err ? reject(err) : resolve(res));
+    }) 
+};
+
 // This is best practice i suppose?
 exports.createUser = function(user){
     return new Promise(function(resolve, reject) {
@@ -71,10 +76,6 @@ exports.createUser = function(user){
     });
 }
     
-
-
-//UserModel.create(user, (err, res) => err ? reject(err) : resolve(res))
-
 exports.validateUserByUsernamePassword = async (user) => {
     console.log(user)
     return await UserModel.findOne({'userName': user.username}, function(err, person){
