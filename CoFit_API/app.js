@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 // TODO: Change var names
 var indexRouter = require('./routes/index');
@@ -31,6 +32,9 @@ mongoose.connection.on("connected", () => {
 });
 
 var app = express();
+
+app.use(cors())
+
 
 app.use(logger('dev'));
 app.use(express.json());
