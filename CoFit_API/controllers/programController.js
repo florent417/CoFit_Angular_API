@@ -15,8 +15,10 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.workoutProgram = async (req, res) => {
-  console.log(req.body);
-  await repo.getWorkoutProgram(req)
+
+  var queryworkout = req.query.workoutid;
+
+  await repo.getWorkoutProgram(queryworkout)
     .then(workoutProgram => {
       res
         .status(200)
@@ -47,7 +49,7 @@ module.exports.addExercise = async (req, res) => {
   await repo.addExerciseToProgram(req, res)
     .then(exercise  => {
       res
-        .status(201)
+        .status(200)
         .send();
     })
     .catch(err => {

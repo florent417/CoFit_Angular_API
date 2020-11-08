@@ -34,7 +34,11 @@ exports.getAllWorkoutPrograms = () => {
 }
 
 exports.getWorkoutProgram =  async (req) => {
-    let workoutProgramObjectId = mongoose.Types.ObjectId(req.body.workoutProgramId);
+    console.log(req)
+
+    let workoutProgramObjectId = mongoose.Types.ObjectId(req);
+    
+    console.log('mongose')
     
     return new Promise((resolve, reject) => {
         WorkoutProgramModel.findById(workoutProgramObjectId, (err, res) => 
@@ -53,7 +57,7 @@ exports.addExerciseToProgram = async (req) => {
     return new Promise((resolve, reject) => {
         WorkoutProgramModel.findByIdAndUpdate(req.body.programId, { 
             $push: { 
-                exercises: exercise 
+                exercises: exercise
             }
         }, (err, res) => err ? reject(err) : resolve(res));
     }) 
