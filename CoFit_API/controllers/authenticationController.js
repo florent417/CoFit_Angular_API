@@ -7,9 +7,9 @@ module.exports.login = async function (req, res) {
     await repository.validateUser(req.body)
         .then(x => {
             // Add response
+            console.log(x)
             var jwt = helpers.generatejwt(req.username)
-            console.log(jwt)
-            var response = {username: x.body.username, token: jwt}
+            var response = {id: x._id, username: x.userName, token: jwt}
             res.status(200).send(response);
         })
 /*
