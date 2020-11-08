@@ -2,6 +2,12 @@ var express = require('express');
 var router = express.Router();
 var ctrlauth = require('../controllers/authenticationController');
 var ctrlPrograms = require('../controllers/programController');
+var jwt = require('express-jwt');
+var auth = jwt({
+  secret: process.env.SECRETKEY,
+  algorithms: ['HS256'],
+  userProperty: 'payload'
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
