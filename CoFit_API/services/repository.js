@@ -75,6 +75,7 @@ exports.createUser = function(user){
 
 //UserModel.create(user, (err, res) => err ? reject(err) : resolve(res))
 
+/*
 exports.validateUserByUsernamePassword = async (user) => {
     console.log(user)
     return await UserModel.findOne({'userName': user.username}, function(err, person){
@@ -87,3 +88,11 @@ exports.validateUserByUsernamePassword = async (user) => {
         }
     })
 };
+
+*/
+
+exports.validateUser = function(user){
+    return new Promise(function(resolve, reject){
+        UserModel.findOne({'userName': user.userName}, (err, res) => err ? reject(err) : resolve(res))
+    })
+}
