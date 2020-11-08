@@ -5,6 +5,7 @@ var logger = require('morgan');
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var cors = require('cors')
+require('dotenv').config()
 
 // TODO: Change var names
 var indexRouter = require('./routes/index');

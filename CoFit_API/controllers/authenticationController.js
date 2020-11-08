@@ -4,7 +4,15 @@ const helpers = require('../helpers')
 
 // Login User
 module.exports.login = async function (req, res) {
-
+    await repository.validateUser(req.body)
+        .then(x => {
+            // Add response
+            var jwt = helpers.generatejwt(req.username)
+            console.log(jwt)
+            var response = {username: x.body.username, token: jwt}
+            res.status(200).send(response);
+        })
+/*
     await repository.validateUserByUsernamePassword(req.body)
     .then(x => {
         console.log('correct');
@@ -23,6 +31,10 @@ module.exports.login = async function (req, res) {
 
 
     res.status(200).send(req.body);
+*/
+
+    
+
 }
 
 module.exports.register = async function (req,res) {
