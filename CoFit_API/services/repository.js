@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const UserModel = require("../models/user");
 const WorkoutProgramModel = require("../models/workoutProgram");
 const ExerciseModel = require("../models/exercise");
+const LogModel = require("../models/log");
 
 exports.createProgram = async (req, res) => {
     const workoutProgram = new WorkoutProgramModel();
@@ -64,13 +65,22 @@ exports.addExerciseToProgram = async (req) => {
 };
 
 exports.addLogActivityToProgram = async (req) => {
+    const log = new LogModel({
+        text: req.body.text,
+        createdBy: req.body.createdBy
+    });
     return new Promise((resolve, reject) => {
+        /*
+        LogModel.create(log, (err, res) => {
+            err ? reject(err) : resolve(res);
+        });
+        */
         WorkoutProgramModel.findByIdAndUpdate(req.body.programId, { 
             $push: { 
-                logs: req.body.logActivity 
+                logs: log 
             }
         }, (err, res) => err ? reject(err) : resolve(res));
-    }) 
+    }); 
 };
 
 // This is best practice i suppose?

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const ExerciseSchema = require("./exercise").schema;
+const LogSchema = require("./log").schema;
 
 const Schema = mongoose.Schema;
 
@@ -18,8 +19,8 @@ const workoutProgram = new Schema(
             ref: "User"
         },
         logs:  {
-            type: [String],
-            required: false
+            type: [LogSchema],
+            default: []
         },
     }
 );
