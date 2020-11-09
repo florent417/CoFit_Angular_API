@@ -27,7 +27,7 @@ router.get('/program',auth,ctrlPrograms.workoutProgram);
 router.post('/exercises/add',auth, ctrlPrograms.addExercise);
 
 /* Activity Logs */
-router.post('/programs/logs/add', ctrlPrograms.addLogActivity);
+router.post('/programs/logs/add', auth, ctrlPrograms.addLogActivity);
 
 
 module.exports = router;
