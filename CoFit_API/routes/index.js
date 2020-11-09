@@ -20,11 +20,11 @@ router.post('/register', ctrlauth.register)
 
 /* Programs */
 router.get('/programs', ctrlPrograms.index);
-router.post('/programs', ctrlPrograms.createProgram);
-router.get('/program', ctrlPrograms.workoutProgram);
+router.post('/programs',auth, ctrlPrograms.createProgram);
+router.get('/program',auth,ctrlPrograms.workoutProgram);
 
 /* Exercises */
-router.post('/exercises/add', ctrlPrograms.addExercise);
+router.post('/exercises/add',auth, ctrlPrograms.addExercise);
 
 /* Activity Logs */
 router.post('/programs/logs/add', ctrlPrograms.addLogActivity);
